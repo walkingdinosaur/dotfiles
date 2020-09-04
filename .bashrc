@@ -1,4 +1,3 @@
-# ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
@@ -60,6 +59,10 @@ if [ "$color_prompt" = yes ]; then
     # PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
     # PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;93m\]\w\[\033[00m\]\$ '
     PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;93m\]\w\[\033[1;31m\]$(__git_ps1)\[\033[00m\] \$ '
+    export GIT_PS1_SHOWUPSTREAM=""
+    export GIT_PS1_SHOWUNTRACKEDFILES="1"
+    export GIT_PS1_SHOWSTASHSTATE=""
+    export GIT_PS1_SHOWDIRTYSTATE="1"
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
@@ -125,6 +128,8 @@ if [ -d "${HOME}/.pyenv" ] && [ -d "${HOME}/.pyenv/bin" ]; then
   eval "$(pyenv virtualenv-init -)"
 fi
 
+# golang path
+
 # git-prompt/git-completion
 if [ -f "${HOME}/.git-completion.bash" ]; then
   chmod a+x "${HOME}/.git-completion.bash"
@@ -134,4 +139,20 @@ if [ -f "${HOME}/.git-prompt.sh" ]; then
   chmod a+x "${HOME}/.git-prompt.sh"
   source "${HOME}/.git-prompt.sh"
 fi
+
+# start genie
+# https://www.tomoyan.net/windows/wsl
+if [ -f /usr/bin/genie ]; then
+  genie -s
+else
+  echo "genie is not install"
+fi
+
+# pyenv
+if [  -f "${HOME}/.pyenv/bin/pyenv" ]; then
+  export PATH="${HOME}/.pyenv/bin:${PATH}"
+  eval "$(pyenv init -)"
+  eval "$(pyenv virtualenv-init -)"
+fi
+
 
